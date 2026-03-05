@@ -1,13 +1,11 @@
 package simulator.crystal.slot.user;
 
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@Getter
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
@@ -31,5 +29,16 @@ public class UserService {
 
         user.setBalance(user.getBalance() + amount);
         userRepository.save(user);
+    }
+    @Transactional
+    public boolean trySpendMoney(Long amount, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (user.getBalance() < amount) {
+            return false;
+        }
+        user.setBalance(user.getBalance() - amount);
+        return true;
     }
 }
