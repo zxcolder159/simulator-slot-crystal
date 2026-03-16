@@ -1,7 +1,6 @@
 package simulator.crystal.slot.user;
 
 import jakarta.transaction.Transactional;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +38,7 @@ public class UserService {
             return false;
         }
         user.setBalance(user.getBalance() - amount);
+		userRepository.save(user);
         return true;
     }
 }
