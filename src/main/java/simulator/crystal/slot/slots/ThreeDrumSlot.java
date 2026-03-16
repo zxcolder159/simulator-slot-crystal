@@ -1,4 +1,4 @@
-package simulator.crystal.slot.games;
+package simulator.crystal.slot.slots;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +8,7 @@ public class ThreeDrumSlot implements Slot{
     final static int[] drumLine = new int[100];
 
 
-    private void initialiseDrumLine() {
+    public static void initialiseDrumLine() {
         for(int i = 0; i < 70; i++) {
             drumLine[i] = 1;
         }

@@ -24,7 +24,7 @@ public class UserService {
     }
     @Transactional
     public void addMoney(Long amount, Long userId) {
-        User user = userRepository.findById(userId)
+        User user = userRepository.findByIdForUpdate(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         user.setBalance(user.getBalance() + amount);
@@ -32,7 +32,7 @@ public class UserService {
     }
     @Transactional
     public boolean trySpendMoney(Long amount, Long userId) {
-        User user = userRepository.findById(userId)
+        User user = userRepository.findByIdForUpdate(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (user.getBalance() < amount) {
