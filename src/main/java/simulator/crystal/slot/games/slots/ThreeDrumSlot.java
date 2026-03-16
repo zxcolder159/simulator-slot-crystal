@@ -1,4 +1,4 @@
-package simulator.crystal.slot.slots;
+package simulator.crystal.slot.games.slots;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +8,7 @@ public class ThreeDrumSlot implements Slot{
     final static int[] drumLine = new int[100];
 
 
-    public static void initialiseDrumLine() {
+    private static void initialiseDrumLine() {
         for(int i = 0; i < 70; i++) {
             drumLine[i] = 1;
         }
@@ -21,7 +21,7 @@ public class ThreeDrumSlot implements Slot{
     }
 
     @Override
-    public Long calculatePaylines (long bet) {
+    public SlotResult calculatePaylines (long bet) {
         SecureRandom secureRandom = new SecureRandom();
         int[] result = new int[3];
         result[0] = drumLine[secureRandom.nextInt(drumLine.length)];
@@ -32,15 +32,26 @@ public class ThreeDrumSlot implements Slot{
         for(int x : result) {
             map.merge(x, 1, Integer::sum);
         }
-        if(map.getOrDefault(7, 0) == 3) return bet*50;
-        if(map.getOrDefault(7, 0) == 2) return bet*5;
+	    long win = 0L;
 
-        if(map.getOrDefault(2, 0) == 3) return bet*10;
-        if(map.getOrDefault(2, 0) == 2) return (long) (bet * 1.5);
+	    if (map.getOrDefault(7, 0) == 3) {
+		    win = bet * 50;
+	    } else if (map.getOrDefault(2, 0) == 3) {
+		    win = bet * 10;
+	    } else if (map.getOrDefault(1, 0) == 3) {
+		    win = (long) (bet * 1.2);
+	    }
+	    else if (map.getOrDefault(7, 0) == 2) {
+		    win = bet * 5;
+	    } else if (map.getOrDefault(2, 0) == 2) {
+		    win = (long) (bet * 1.5);
+	    } else if (map.getOrDefault(1, 0) == 2) {
+		    win = (long) (bet * 0.4);
+	    }
 
-        if(map.getOrDefault(1, 0) == 3) return (long) (bet * 1.2);
-        if(map.getOrDefault(1, 0) == 2) return (long) (bet * 0.4);
-
-        return 0L;
+	    return new SlotResult(result, win);
     }
+	static {
+		initialiseDrumLine();
+	}
 }
