@@ -1,9 +1,11 @@
 package simulator.crystal.slot.games.slots;
+import org.springframework.stereotype.Component;
+
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@Component
 public class ThreeDrumSlot implements Slot{
     final static int[] drumLine = new int[100];
 
