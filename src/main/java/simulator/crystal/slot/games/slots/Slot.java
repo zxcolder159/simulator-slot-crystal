@@ -4,4 +4,5 @@ public interface Slot {
 
     SlotResult calculatePaylines(long bet);
 
+	String getName();
 }

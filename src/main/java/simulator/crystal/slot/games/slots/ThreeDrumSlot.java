@@ -53,6 +53,11 @@ public class ThreeDrumSlot implements Slot{
 
 	    return new SlotResult(result, win);
     }
+	@Override
+	public String getName() {
+		return "Three Drums Slot";
+	}
+
 	static {
 		initialiseDrumLine();
 	}
