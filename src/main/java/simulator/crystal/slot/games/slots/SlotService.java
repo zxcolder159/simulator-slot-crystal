@@ -1,5 +1,6 @@
 package simulator.crystal.slot.games.slots;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ public class SlotService {
 
 	private final UserService userService;
 
-
+	@Transactional
 	SlotResult play(Long userId, Long bet, Slot slot) {
 		SlotResult slotResult;
 		if(userService.trySpendMoney(bet, userId)) {
