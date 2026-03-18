@@ -8,13 +8,19 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Getter
 @RequestMapping("/api/v1/history")
 public class BetController {
 	private final BetHistoryRepository betHistoryRepository;
 
-	@GetMapping("/{usedId}")
-	public List<BetHistory> getAllBetHistory(@PathVariable Long userId) {
-		return betHistoryRepository.findAllByUserIdOrderByTimeDesc(userId);
+	@GetMapping("/{userId}")
+	public List<BetHistoryDto> getAllBetHistory(@PathVariable Long userId) {
+		List<BetHistory> betHistoryList = betHistoryRepository.findAllByUserIdOrderByTimeDesc(userId);
+		return betHistoryList.stream()
+				.map(history -> new BetHistoryDto(
+						history.getGameName(),
+						history.getBet(),
+						history.getWin(),
+						history.getTime()))
+				.toList();
 	}
 }
