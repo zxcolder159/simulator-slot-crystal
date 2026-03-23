@@ -9,6 +9,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/history")
+@CrossOrigin(origins = "*")
 public class BetController {
 	private final BetHistoryRepository betHistoryRepository;
 

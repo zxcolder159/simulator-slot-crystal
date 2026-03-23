@@ -10,5 +10,4 @@ public class SpinRequest {
 	private Long userId;
 	private Long bet;
 	private String slotType;
-
 }

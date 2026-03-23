@@ -41,4 +41,10 @@ public class UserService {
 		userRepository.save(user);
         return true;
     }
+
+	public Long getBalance(Long userId) {
+		return userRepository.findById(userId)
+				.map(User::getBalance)
+				.orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+	}
 }

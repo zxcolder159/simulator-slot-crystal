@@ -17,4 +17,5 @@ public class User {
     private String userName;
     private Long balance;
     private String avatarUrl = "default-avatar.png";
+	private String password;
 }
