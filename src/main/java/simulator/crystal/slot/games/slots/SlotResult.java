@@ -1,5 +1,6 @@
 package simulator.crystal.slot.games.slots;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -8,9 +9,8 @@ import lombok.RequiredArgsConstructor;
  * Нужен для хранения данных, которые будут передавать в frontEnd.
  */
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SlotResult {
 	private final int[] symbols;
 	private final long win;
-
 }
