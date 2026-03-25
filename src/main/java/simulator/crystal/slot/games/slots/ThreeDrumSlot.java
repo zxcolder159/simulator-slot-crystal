@@ -51,7 +51,9 @@ public class ThreeDrumSlot implements Slot{
 		    win = (long) (bet * 0.4);
 	    }
 
-	    return new SlotResult(result, win);
+	    int[][] resultMatrix = new int[1][3];
+        resultMatrix[0] = result;
+        return new SlotResult(resultMatrix, win);
     }
 	@Override
 	public String getName() {
