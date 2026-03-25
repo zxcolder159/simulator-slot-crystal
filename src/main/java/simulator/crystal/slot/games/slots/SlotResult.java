@@ -11,6 +11,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @AllArgsConstructor
 public class SlotResult {
-	private final int[] symbols;
+	private final int[][] symbols;
 	private final long win;
 }
