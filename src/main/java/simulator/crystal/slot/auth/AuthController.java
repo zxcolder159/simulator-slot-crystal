@@ -25,8 +25,8 @@ public class AuthController {
 		@ApiResponse(responseCode = "409", description = "User already exists")
 	})
 	@PostMapping("/register")
-	public String register(@RequestBody AuthRequest request) {
-		return authService.register(request.login(), request.password());
+	public AuthResponse register(@RequestBody AuthRequest request) {
+		return new AuthResponse(authService.register(request.login(), request.password()));
 	}
 
 	@Operation(summary = "Authenticate user", description = "Authenticates a user and returns a token")
@@ -35,7 +35,7 @@ public class AuthController {
 		@ApiResponse(responseCode = "401", description = "Invalid credentials")
 	})
 	@PostMapping("/login")
-	public String login(@RequestBody AuthRequest request) {
-		return authService.login(request.login(), request.password());
+	public AuthResponse login(@RequestBody AuthRequest request) {
+		return new AuthResponse(authService.login(request.login(), request.password()));
 	}
 }
