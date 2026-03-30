@@ -12,7 +12,9 @@ public class AuthService {
 
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
-	public void register(String login, String password) {
+	private final JwtUtil jwtUtil;
+
+	public String register(String login, String password) {
 		if(userRepository.existsByUserName(login)) {
 			throw new RuntimeException("User already exists");
 		}
@@ -23,14 +25,16 @@ public class AuthService {
 				.role("ROLE_USER")
 				.build();
 		user = userRepository.save(user);
+		return jwtUtil.generateToken(login);
 	}
 
-	public void login(String login, String password) {
+	public String login(String login, String password) {
 		User user = userRepository.findByUserName(login)
 				.orElseThrow(() -> new RuntimeException("User not found"));
 
 		if(!passwordEncoder.matches(password, user.getPassword())) {
 			throw new RuntimeException("Invalid password");
 		}
+		return jwtUtil.generateToken(login);
 	}
 }

@@ -13,7 +13,6 @@ public class UserService {
     public void addMoney(Long amount, Long userId) {
         User user = userRepository.findByIdForUpdate(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
         user.setBalance(user.getBalance() + amount);
         userRepository.save(user);
     }

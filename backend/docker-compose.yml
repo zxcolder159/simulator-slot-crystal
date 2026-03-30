@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # Настройка базы данных
   db:
     image: postgres:15-alpine
     container_name: slot_db_container
@@ -13,16 +12,15 @@ services:
     ports:
       - "5433:5432"
 
-  # Настройка твоего приложения
   app:
-    build: .
+    build: ..
     container_name: slot_app_container
     ports:
       - "8080:8080"
     environment:
-      # Указываем приложению, что база теперь находится по имени сервиса "db"
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/simulator_slot
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
     depends_on:
       - db
