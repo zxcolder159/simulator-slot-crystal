@@ -3,6 +3,7 @@ package simulator.crystal.slot.auth;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Component;
+import simulator.crystal.slot.excaptions.JwtSecretKeyException;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -47,7 +48,7 @@ public class JwtUtil {
 
 	private SecretKey getSigningKey () {
 		if(secretKey == null) {
-			throw new RuntimeException("JWT_SECRET_KEY not found");
+			throw new JwtSecretKeyException("JWT_SECRET_KEY environment variable not found");
 		}
 		return new SecretKeySpec(secretKey.getBytes(), "HmacSHA256");
 	}

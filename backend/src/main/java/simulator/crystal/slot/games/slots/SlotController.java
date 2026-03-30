@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import simulator.crystal.slot.user.UserService;
+import simulator.crystal.slot.excaptions.GameNotFoundException;
+import simulator.crystal.slot.excaptions.InvalidBetException;
 
 import java.util.Map;
 
@@ -23,10 +25,10 @@ public class SlotController {
 		Slot selectedSlot = allSlots.get(request.getSlotType());
 
 		if (selectedSlot == null) {
-			throw new RuntimeException("Такой игры не существует!");
+			throw new GameNotFoundException("Game not found: " + request.getSlotType());
 		}
 		if(request.getBet() <= 0) {
-			throw new RuntimeException("Нельзя делать отрицательные ставки!");
+			throw new InvalidBetException("Bet must be positive, provided: " + request.getBet());
 		}
 		SlotResult result = slotService.play(request.getUserId(), request.getBet(), selectedSlot);
 

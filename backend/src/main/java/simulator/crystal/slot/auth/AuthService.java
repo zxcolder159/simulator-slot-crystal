@@ -5,6 +5,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import simulator.crystal.slot.user.User;
 import simulator.crystal.slot.user.UserRepository;
+import simulator.crystal.slot.excaptions.UserAlreadyExistsException;
+import simulator.crystal.slot.excaptions.UserNotFoundException;
+import simulator.crystal.slot.excaptions.InvalidPasswordException;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +19,7 @@ public class AuthService {
 
 	public String register(String login, String password) {
 		if(userRepository.existsByUserName(login)) {
-			throw new RuntimeException("User already exists");
+			throw new UserAlreadyExistsException("User already exists: " + login);
 		}
 		User user = User.builder()
 				.userName(login)
@@ -30,10 +33,10 @@ public class AuthService {
 
 	public String login(String login, String password) {
 		User user = userRepository.findByUserName(login)
-				.orElseThrow(() -> new RuntimeException("User not found"));
+				.orElseThrow(() -> new UserNotFoundException("User not found: " + login));
 
 		if(!passwordEncoder.matches(password, user.getPassword())) {
-			throw new RuntimeException("Invalid password");
+			throw new InvalidPasswordException("Invalid password for user: " + login);
 		}
 		return jwtUtil.generateToken(login);
 	}

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import simulator.crystal.slot.data.BetHistory;
 import simulator.crystal.slot.data.BetHistoryRepository;
 import simulator.crystal.slot.user.UserService;
+import simulator.crystal.slot.excaptions.InsufficientFundsException;
 
 import java.time.LocalDateTime;
 
@@ -19,24 +20,18 @@ public class SlotService {
 
 	@Transactional
 	SlotResult play(Long userId, Long bet, Slot slot) {
-		SlotResult slotResult;
-		if(userService.trySpendMoney(bet, userId)) {
-			slotResult = slot.calculatePaylines(bet);
-			userService.addMoney(slotResult.getWin(), userId);
-			BetHistory history = BetHistory.builder()
-					.userId(userId)
-					.bet(bet)
-					.win(slotResult.getWin())
-					.gameName(slot.getName())
-					.time(LocalDateTime.now())
-					.build();
-			betHistoryRepository.save(history);
-		}
-		else {
-			throw new RuntimeException("Нет денег!");
-		}
+		userService.trySpendMoney(bet, userId);
+		SlotResult slotResult = slot.calculatePaylines(bet);
+		userService.addMoney(slotResult.getWin(), userId);
+		BetHistory history = BetHistory.builder()
+				.userId(userId)
+				.bet(bet)
+				.win(slotResult.getWin())
+				.gameName(slot.getName())
+				.time(LocalDateTime.now())
+				.build();
+		betHistoryRepository.save(history);
 		return slotResult;
-
 	}
 
 }
