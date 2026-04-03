@@ -2,6 +2,7 @@ package simulator.crystal.slot.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import simulator.crystal.slot.wallet.Wallet;
 
 @Entity
 @Table(name = "users")
@@ -15,7 +16,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String userName;
-    private Long balance;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Wallet wallet;
     private String avatarUrl = "default-avatar.png";
 	private String password;
 	private String role;

@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 import simulator.crystal.slot.data.BetHistory;
 import simulator.crystal.slot.data.BetHistoryRepository;
 import simulator.crystal.slot.user.UserService;
-import simulator.crystal.slot.excaptions.InsufficientFundsException;
+import simulator.crystal.slot.exceptions.InsufficientFundsException;
+import simulator.crystal.slot.wallet.WalletService;
 
 import java.time.LocalDateTime;
 
@@ -15,14 +16,13 @@ import java.time.LocalDateTime;
 @Service
 public class SlotService {
 
-	private final UserService userService;
+	private final WalletService walletService;
 	private final BetHistoryRepository betHistoryRepository;
 
 	@Transactional
 	SlotResult play(Long userId, Long bet, Slot slot) {
-		userService.trySpendMoney(bet, userId);
 		SlotResult slotResult = slot.calculatePaylines(bet);
-		userService.addMoney(slotResult.getWin(), userId);
+		Long netResult = walletService.processBet(userId, bet, slotResult.getWin());
 		BetHistory history = BetHistory.builder()
 				.userId(userId)
 				.bet(bet)

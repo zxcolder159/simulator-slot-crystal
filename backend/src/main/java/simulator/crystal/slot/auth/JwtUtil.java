@@ -3,7 +3,7 @@ package simulator.crystal.slot.auth;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Component;
-import simulator.crystal.slot.excaptions.JwtSecretKeyException;
+import simulator.crystal.slot.exceptions.JwtSecretKeyException;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;

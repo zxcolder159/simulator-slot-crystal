@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
-import simulator.crystal.slot.excaptions.UserNotFoundException;
+import simulator.crystal.slot.exceptions.UserNotFoundException;
 
 @Tag(name = "User Profile", description = "API for managing user profiles")
 @RequestMapping("/api/v1/profile")
@@ -29,6 +29,6 @@ public class UserController {
 		@Parameter(description = "ID of the user to retrieve", required = true)
 		@PathVariable Long userId) {
 		User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
-		return new UserDTO(user.getUserName(), user.getAvatarUrl(), user.getBalance());
+		return new UserDTO(user);
 	}
 }

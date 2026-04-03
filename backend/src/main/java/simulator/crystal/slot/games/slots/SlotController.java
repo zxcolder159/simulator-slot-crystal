@@ -4,8 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import simulator.crystal.slot.user.UserService;
-import simulator.crystal.slot.excaptions.GameNotFoundException;
-import simulator.crystal.slot.excaptions.InvalidBetException;
+import simulator.crystal.slot.exceptions.GameNotFoundException;
+import simulator.crystal.slot.exceptions.InvalidBetException;
 
 import java.util.Map;
 

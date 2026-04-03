@@ -13,4 +13,8 @@ public record UserDTO (
 	@Schema(description = "Current balance of the user", example = "1000")
 	Long balance) {
 
+	public UserDTO(User user) {
+		this(user.getUserName(), user.getAvatarUrl(), user.getWallet() != null ? user.getWallet().getBalance() : 0L);
+	}
+
 }
