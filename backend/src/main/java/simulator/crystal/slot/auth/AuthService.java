@@ -5,9 +5,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import simulator.crystal.slot.user.User;
 import simulator.crystal.slot.user.UserRepository;
-import simulator.crystal.slot.excaptions.UserAlreadyExistsException;
-import simulator.crystal.slot.excaptions.UserNotFoundException;
-import simulator.crystal.slot.excaptions.InvalidPasswordException;
+import simulator.crystal.slot.wallet.Wallet;
+import simulator.crystal.slot.exceptions.UserAlreadyExistsException;
+import simulator.crystal.slot.exceptions.UserNotFoundException;
+import simulator.crystal.slot.exceptions.InvalidPasswordException;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -21,10 +24,17 @@ public class AuthService {
 		if(userRepository.existsByUserName(login)) {
 			throw new UserAlreadyExistsException("User already exists: " + login);
 		}
+		
+		Wallet wallet = Wallet.builder()
+				.balance(0L)
+				.createdAt(LocalDateTime.now())
+				.updatedAt(LocalDateTime.now())
+				.build();
+		
 		User user = User.builder()
 				.userName(login)
 				.password(passwordEncoder.encode(password))
-				.balance(0L)
+				.wallet(wallet)
 				.role("ROLE_USER")
 				.build();
 		user = userRepository.save(user);

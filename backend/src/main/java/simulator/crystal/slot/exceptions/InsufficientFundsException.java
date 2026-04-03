@@ -1,4 +1,4 @@
-package simulator.crystal.slot.excaptions;
+package simulator.crystal.slot.exceptions;
 
 public class InsufficientFundsException extends RuntimeException {
 	public InsufficientFundsException(String message) {

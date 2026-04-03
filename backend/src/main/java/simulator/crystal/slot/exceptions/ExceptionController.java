@@ -1,4 +1,4 @@
-package simulator.crystal.slot.excaptions;
+package simulator.crystal.slot.exceptions;
 
 
 import org.springframework.http.ResponseEntity;

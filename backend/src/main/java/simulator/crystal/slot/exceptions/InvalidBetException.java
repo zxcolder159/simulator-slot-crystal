@@ -1,4 +1,4 @@
-package simulator.crystal.slot.excaptions;
+package simulator.crystal.slot.exceptions;
 
 public class InvalidBetException extends RuntimeException {
 	public InvalidBetException(String message) {
