@@ -8,7 +8,7 @@ public record UserDTO (
 	String userName, 
 	
 	@Schema(description = "URL of the user's avatar image", example = "https://example.com/avatar.png")
-	String avatarURL, 
+	String avatarUrl, 
 	
 	@Schema(description = "Current balance of the user", example = "1000")
 	Long balance) {
